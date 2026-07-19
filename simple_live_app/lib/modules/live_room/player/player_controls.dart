@@ -625,6 +625,7 @@ Widget buildDanmuView(VideoState videoState, LiveRoomController controller) {
       strokeWidth: AppSettingsController.instance.danmuStrokeWidth.value,
       fontWeight: AppSettingsController.instance.danmuFontWeight.value,
       fontFamily: AppStyleSettingController.instance.curFontName.value,
+      externalDrive: AppSettingsController.instance.danmuSyncVideoFrame.value,
     ),
   );
   return Positioned.fill(

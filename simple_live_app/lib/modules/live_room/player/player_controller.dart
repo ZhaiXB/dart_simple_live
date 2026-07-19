@@ -234,8 +234,19 @@ mixin PlayerDanmakuMixin on PlayerStateMixin {
   /// 弹幕控制器
   late DanmakuController? danmakuController;
 
+  StreamSubscription? _danmuPosSub;
+
   void initDanmakuController(DanmakuController e) {
     danmakuController = e;
+    videoController.rect.addListener(_onVideoFrameUpdate);
+    _danmuPosSub?.cancel();
+    _danmuPosSub = player.stream.position.listen((_) => _onVideoFrameUpdate());
+  }
+
+  void _onVideoFrameUpdate() {
+    if (AppSettingsController.instance.danmuSyncVideoFrame.value) {
+      danmakuController?.step();
+    }
   }
 
   void updateDanmuOption(DanmakuOption? option) {
@@ -244,6 +255,8 @@ mixin PlayerDanmakuMixin on PlayerStateMixin {
   }
 
   void disposeDanmakuController() {
+    videoController.rect.removeListener(_onVideoFrameUpdate);
+    _danmuPosSub?.cancel();
     danmakuController?.clear();
   }
 

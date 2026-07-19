@@ -95,6 +95,17 @@ class DanmuSettingsView extends GetView<AppSettingsController> {
               ),
               AppStyle.divider,
               Obx(
+                () => SettingsSwitch(
+                  title: "视频同频渲染 (消相位差)",
+                  subtitle: "消除弹幕与视频渲染的相位差，避免 Lossless Scaling 等插帧软件捕捉帧率波动",
+                  value: controller.danmuSyncVideoFrame.value,
+                  onChanged: (e) {
+                    controller.setDanmuSyncVideoFrame(e);
+                  },
+                ),
+              ),
+              AppStyle.divider,
+              Obx(
                 () => SettingsNumber(
                   title: "显示区域",
                   value: (controller.danmuArea.value * 100).toInt(),
